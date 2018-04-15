@@ -81,7 +81,7 @@ public class CinemaActivity extends AppCompatActivity {
             form = qrObj.getString("f");
             hora = qrObj.getString("h");
             frameVideo = "<html><body><iframe width=\"100%\" height=\"90%\" src=\"http://www.youtube.com/embed/"+qrObj.getString("code")+"?autoplay=1\" allowfullscreen=\"true\"></iframe></body></html>";
-            Log.e("My App", "alerta"+frameVideo);
+            Log.e("My App", "alerta: "+frameVideo);
 
         } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON: \"" + json + "\"");
