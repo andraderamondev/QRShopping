@@ -86,8 +86,10 @@ public class MainActivity extends AppCompatActivity{
                 Log.d(TAG, "Scanned");
                 String a = result.getContents().toString();
                 Log.i("INFOR: ","-"+a);
-                
-                alerta("Scan: "+a);
+                //alerta("Scan: "+a);
+                final Intent i = new Intent(MainActivity.this, CinemaActivity.class);
+                i.putExtra("json",a);
+                startActivity(i);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
