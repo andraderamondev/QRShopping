@@ -19,13 +19,14 @@
         android:contentDescription="@string/app_name" />
 
     <TextView
-        android:text="@string/app_name"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:textStyle="normal|bold"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="8dp"
+        android:text="@string/app_name"
         android:textColor="@color/zxing_status_text"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:textStyle="normal|bold" />
 </RelativeLayout>
 

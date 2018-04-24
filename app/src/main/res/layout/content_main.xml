@@ -18,6 +18,6 @@
         android:textSize="18dp"
         android:paddingRight="10dp"
         android:gravity="center"
-        android:text="Clique no icone da camera para assistir o trailer." />
+        android:text="Clique no icone da camera e aponte para o qrcode do filme." />
 
 </RelativeLayout>
