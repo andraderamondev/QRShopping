@@ -21,10 +21,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <WebView
-        android:id="@+id/wv"
+    <fragment
+        android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+        android:id="@+id/youtube_fragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="200dp"/>
 
     <TextView
         android:id="@+id/tv"

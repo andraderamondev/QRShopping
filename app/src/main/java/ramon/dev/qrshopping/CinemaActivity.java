@@ -4,29 +4,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-
-import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
-
-public class CinemaActivity extends AppCompatActivity {
+public class CinemaActivity extends AppCompatActivity{
     Bundle extras;
     String json;
-    String frameVideo = "";
+    String code = "";
     String title;
     String sinop;
     String sala = "";
     String form = "";
     String hora = "";
+    YouTubePlayerFragment playerFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,22 +47,20 @@ public class CinemaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        WebView mWebview = (WebView) findViewById(R.id.wv);
-
-        mWebview.setWebViewClient(new WebViewClient() {
+        playerFragment = (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+        playerFragment.initialize("key", new YouTubePlayer.OnInitializedListener() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                if(!b){
+                    youTubePlayer.cueVideo(code);
+                }
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                alerta("Nao foi possivel carregar o trailer.");
             }
         });
-
-        WebSettings webSettings = mWebview.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        if(!frameVideo.trim().isEmpty()){
-            mWebview.loadData(frameVideo, "text/html", "utf-8");
-        }else{
-            alerta("Nao foi possivel reproduzir o trailer.");
-        }
     }
 
     private void getValuesExtras(Bundle extras) {
@@ -80,8 +73,8 @@ public class CinemaActivity extends AppCompatActivity {
             sala = qrObj.getString("s");
             form = qrObj.getString("f");
             hora = qrObj.getString("h");
-            frameVideo = "<html><body><iframe width=\"100%\" height=\"90%\" src=\"http://www.youtube.com/embed/"+qrObj.getString("code")+"?autoplay=1\" allowfullscreen=\"true\"></iframe></body></html>";
-            Log.e("My App", "alerta: "+frameVideo);
+            code = qrObj.getString("code");
+            Log.e("My App", "alerta: "+code);
 
         } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON: \"" + json + "\"");
